@@ -2,7 +2,7 @@
 
 **Equipo:** Reporte Ciudadano HMO | **Campus:** Hermosillo  
 **Integrantes:** Sebastian Monroy Bojórquez, Jesús René Carranza López, Moisés Anthony Zamudio Salinas  
-**Demo (Video / Evidencias):** [Ver en Google Drive](https://drive.google.com/file/d/1Hq0tmJyiQgae-F9P1J3B_5E8qtWA6tti/view?usp=sharing) | **Aplicación (Google AI Studio):** [Abrir Reporte Ciudadano HMO](https://ai.studio/apps/10283da0-40c4-48ac-800a-396e0595afb5)
+**Demo (Video / Evidencias):** [Ver en Google Drive](https://drive.google.com/file/d/1Hq0tmJyiQgae-F9P1J3B_5E8qtWA6tti/view?usp=sharing) | **Aplicación (Pagina web):** [Abrir Reporte Ciudadano HMO]([https://ai.studio/apps/10283da0-40c4-48ac-800a-396e0595afb5](https://clubdecienciafronteriza.com/reporteciudadanohmo/))
 
 ---
 
