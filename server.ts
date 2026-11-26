@@ -1,5 +1,6 @@
 import 'dotenv/config';
 import express from 'express';
+import fs from 'fs';
 import path from 'path';
 import { fileURLToPath } from 'url';
 import { GoogleGenAI, Type } from '@google/genai';
@@ -619,6 +620,22 @@ async function startServer() {
         summary: buildFallbackSummary(alerts),
       });
     }
+  });
+
+  app.get('/reporteciudadanohmo_paquete_servidor.zip', (_req, res) => {
+    const zipPath = path.resolve(__dirname, 'reporteciudadanohmo_paquete_servidor.zip');
+    if (!fs.existsSync(zipPath)) {
+      return res.status(404).json({ ok: false, error: 'zip_not_found' });
+    }
+    return res.download(zipPath, 'reporteciudadanohmo_paquete_servidor.zip');
+  });
+
+  app.get('/frontend_dist_para_ftp.zip', (_req, res) => {
+    const zipPath = path.resolve(__dirname, 'frontend_dist_para_ftp.zip');
+    if (!fs.existsSync(zipPath)) {
+      return res.status(404).json({ ok: false, error: 'zip_not_found' });
+    }
+    return res.download(zipPath, 'frontend_dist_para_ftp.zip');
   });
 
   if (process.env.NODE_ENV !== 'production') {

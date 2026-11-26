@@ -84,6 +84,8 @@ export function ReportTab({
   const [confirmedReport, setConfirmedReport] = useState<CiudadanoReport | null>(null);
   const [isSpeaking, setIsSpeaking] = useState(false);
   const [downloadedConfirmation, setDownloadedConfirmation] = useState(false);
+  const [isGuideOpen, setIsGuideOpen] = useState(true);
+  const [isSpeakingGuide, setIsSpeakingGuide] = useState(false);
 
   const resolveAddressForCoords = async (lat: number, lng: number) => {
     try {
@@ -393,6 +395,22 @@ export function ReportTab({
     window.setTimeout(() => setDownloadedConfirmation(false), 3000);
   };
 
+  const handleToggleGuideSpeech = () => {
+    if (isSpeakingGuide) {
+      stopSpeaking();
+      setIsSpeakingGuide(false);
+      return;
+    }
+
+    const guideText =
+      'Bienvenido al portal de denuncia ciudadana Reporte Ciudadano HMO. Para usar esta aplicación siga tres pasos sencillos: Paso 1, tome o suba una foto del problema en su calle o banqueta. Paso 2, toque el botón Contar qué pasa para explicarlo con su voz o escríbalo si lo prefiere. Paso 3, presione Enviar Reporte para recibir su folio y oficio oficial.';
+
+    speakSpanish(guideText, {
+      onStart: () => setIsSpeakingGuide(true),
+      onEnd: () => setIsSpeakingGuide(false),
+    });
+  };
+
   if (confirmedReport) {
     return (
       <section aria-labelledby="confirm-title" className="space-y-5">
@@ -521,6 +539,71 @@ export function ReportTab({
 
   return (
     <section aria-labelledby="capture-heading" className="space-y-5">
+      {/* Introducción y guía rápida */}
+      <div className="rounded-2xl border-2 border-[#0F2C59] bg-white p-5 space-y-3">
+        <div className="flex flex-wrap items-start justify-between gap-2">
+          <h2 className="text-[22px] font-extrabold leading-snug text-[#0F2C59]">
+            Bienvenido al portal de denuncia ciudadana
+          </h2>
+          <button
+            type="button"
+            onClick={() => {
+              if (isSpeakingGuide) {
+                stopSpeaking();
+                setIsSpeakingGuide(false);
+              }
+              setIsGuideOpen((prev) => !prev);
+            }}
+            className="text-[18px] font-bold text-[#0F2C59] underline"
+          >
+            {isGuideOpen ? 'Ocultar guía' : 'Ver instrucciones'}
+          </button>
+        </div>
+
+        <p className="text-[18px] leading-relaxed text-[#111827]">
+          Para usar esta aplicación y reportar banquetas dañadas, fugas de agua, fallas de luz o
+          peligros en Hermosillo sin llenar formularios difíciles:
+        </p>
+
+        {isGuideOpen && (
+          <div className="space-y-3 pt-1">
+            <ol className="space-y-2 rounded-xl bg-[#EEF2F8] p-4 text-[18px] leading-relaxed text-[#111827]">
+              <li>
+                <span className="font-extrabold text-[#0F2C59]">1. Toma una foto:</span> muestra el
+                problema con la cámara o elige una imagen guardada.
+              </li>
+              <li>
+                <span className="font-extrabold text-[#0F2C59]">2. Cuenta qué pasa:</span> graba un
+                audio corto con tu voz o toca &ldquo;Prefiero escribir&rdquo;.
+              </li>
+              <li>
+                <span className="font-extrabold text-[#0F2C59]">3. Envía tu reporte:</span>{' '}
+                recibirás tu folio, escucha de confirmación y oficio listo para descargar o
+                imprimir.
+              </li>
+            </ol>
+
+            <button
+              type="button"
+              onClick={handleToggleGuideSpeech}
+              className="flex min-h-[58px] w-full items-center justify-center gap-2.5 rounded-xl border-2 border-[#0F2C59] bg-[#FAF8F5] px-4 py-3 text-[22px] font-bold text-[#0F2C59] hover:bg-[#EEF2F8]"
+            >
+              {isSpeakingGuide ? (
+                <>
+                  <VolumeX className="h-6 w-6 shrink-0" aria-hidden="true" />
+                  <span>Detener guía en voz</span>
+                </>
+              ) : (
+                <>
+                  <Volume2 className="h-6 w-6 shrink-0" aria-hidden="true" />
+                  <span>Escuchar instrucciones</span>
+                </>
+              )}
+            </button>
+          </div>
+        )}
+      </div>
+
       <div className="rounded-2xl border-2 border-[#D6D3CD] bg-white p-4 space-y-3">
         <div className="flex flex-wrap items-center justify-between gap-2">
           <div className="flex items-center gap-2.5">
