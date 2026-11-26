@@ -1,0 +1,32 @@
+@import "tailwindcss";
+
+@layer base {
+  :root {
+    --font-display: 'Plus Jakarta Sans', system-ui, -apple-system, sans-serif;
+    --font-body: 'Atkinson Hyperlegible', system-ui, -apple-system, sans-serif;
+  }
+
+  html {
+    font-family: var(--font-body);
+    font-size: 18px;
+    background-color: #FAF8F5;
+    color: #111827;
+  }
+
+  h1, h2, h3, h4, button {
+    font-family: var(--font-display);
+  }
+
+  *:focus-visible {
+    outline: 3px solid #0F2C59;
+    outline-offset: 3px;
+  }
+}
+
+.tabular-nums {
+  font-variant-numeric: tabular-nums;
+}
+
+.pb-safe {
+  padding-bottom: max(0.5rem, env(safe-area-inset-bottom));
+}
